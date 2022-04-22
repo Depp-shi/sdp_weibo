@@ -10,6 +10,7 @@ class SessionsController extends Controller
     {
         return view('sessions.create');
     }
+
     public function store(Request $request)
     {
        $credentials = $this->validate($request, [
@@ -24,5 +25,12 @@ class SessionsController extends Controller
             return redirect()->back()->withInput();
         }
        return;
+    }
+
+    public function destroy()
+    {
+        Auth::logout();
+        session()->flash('success', '您已成功退出！');
+        return redirect('login');
     }
 }
