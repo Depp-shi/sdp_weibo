@@ -12,6 +12,27 @@ use Carbon\Carbon;
 
 class PasswordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('throttle:2,1', [
+            'only' => ['showLinkRequestForm']
+        ]);
+        $this->middleware('throttle:3,10', [
+            'only' => ['sendResetLinkEmail']
+        ]);
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+
+        // 限流 10 分钟十次
+        $this->middleware('throttle:10,10', [
+            'only' => ['store']
+        ]);
+        $this->middleware('throttle:10,60', [
+            'only' => ['store']
+        ]);
+    }
+
     public function showLinkRequestForm()
     {
         return view('auth.passwords.email');
@@ -108,4 +129,6 @@ class PasswordController extends Controller
         session()->flash('danger', '未找到重置记录');
         return redirect()->back();
     }
+
+
 }
