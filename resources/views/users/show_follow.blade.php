@@ -8,7 +8,7 @@
   <div class="list-group list-group-flush">
     @foreach ($users as $user)
       <div class="list-group-item">
-        {{-- <img class="me-3" src="{{ $user->gravatar() }}" alt="{{ $user->name }}" width=32> --}}
+        <img class="me-3" src="{{ $user->gravatar() }}" alt="{{ $user->name }}" width=32>
         <a class="text-decoration-none" href="{{ route('users.show', $user) }}">
           {{ $user->name }}
         </a>
